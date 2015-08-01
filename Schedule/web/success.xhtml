@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Welcome</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet name="style.css"  />
+    </h:head>
+    <h:body>
+        <div id="container">
+            <ui:include src="header.xhtml"/>
+            <div id="content">
+            <h1>Welcome #{userController.username}</h1>
+            
+            
+            
+            
+            <h:outputLabel value="Username: #{userController.username}"/><br />
+            <h:outputLabel value="Password: #{userController.password}"/><br />
+            <h:outputLabel value="Date created: #{userController.dateCreated}"/><br />
+            <h:outputLabel value="Date of birth: #{userController.dateOfBirth}"/><br />
+            <h:outputLabel value="Last login date: #{userController.dateLastLogin}"/><br />
+
+            <h:button value="Log out" outcome="#{userController.logout()}"/>
+            </div>
+            <ui:include src="footer.xhtml"/>
+        </div>
+    </h:body>
+</html>

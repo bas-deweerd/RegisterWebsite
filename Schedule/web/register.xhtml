@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Register new account</title>
+        <h:outputStylesheet name="register.css"  />
+    </h:head>
+    <h:body>
+        #{userController.connect()}
+        
+        
+        <div id="container">
+        <ui:include src="header.xhtml"/>
+        <div id="content">
+            <h1>Register</h1>
+            <h:form>
+                <br/>
+                <h:outputLabel value="Username "/>
+                <h:inputText id="username" value="#{registerBean.username}"/>
+                <h:outputLabel id="correct" style="color: #2dd187 !important;" value="#{registerBean.usernameIsValid()==true? ' ✓' : ''}"/>
+                <h:outputLabel id="incorrect" style="color: #F00 !important;" value="#{registerBean.usernameIsValid()==false? ' X' : ''}"/>
+                
+                <f:ajax event="keyup" execute="username" render="correct incorrect "/>
+                <br /><br />
+                
+                <h:outputLabel value="Password "/>
+                <h:inputSecret id="password" value="#{registerBean.password}"/>
+                <h:outputLabel id="not1" style="color: #F00 !important;" value="#{registerBean.passwordPoints()==0? ' X Not safe' : ''}"/>
+                <h:outputLabel id="not2" style="color: #F00 !important;" value="#{registerBean.passwordPoints()==1? ' X Not safe' : ''}"/>
+                <h:outputLabel id="not3" style="color: #F00 !important;" value="#{registerBean.passwordPoints()==2? ' X Not safe' : ''}"/>
+                <h:outputLabel id="not4" style="color: #F00 !important;" value="#{registerBean.passwordPoints()==3? ' X Not safe' : ''}"/>
+                <h:outputLabel id="not5" style="color: #ffa500 !important;" value="#{registerBean.passwordPoints()==4? ' X Not safe' : ''}"/>
+                <h:outputLabel id="somewhat" style="color: #FFE600 !important;" value="#{registerBean.passwordPoints()==5? ' ✓  Somewhat safe' : ''}"/>
+                <h:outputLabel id="safe1" style="color: #2dd187 !important;" value="#{registerBean.passwordPoints()==6? ' ✓  Safe' : ''}"/>
+                <h:outputLabel id="safe2" style="color: #2dd187 !important;" value="#{registerBean.passwordPoints()==7? ' ✓ Safe' : ''}"/>
+                <h:outputLabel id="very1" style="color: #2dd187 !important;" value="#{registerBean.passwordPoints()==8? ' ✓  Very safe' : ''}"/>
+                <h:outputLabel id="very2" style="color: #2dd187 !important;" value="#{registerBean.passwordPoints()==9? ' ✓  Very safe' : ''}"/>
+                
+                <f:ajax event="keyup" execute="password" render="not1 not2 not3 not4 not5 somewhat safe1 safe2 very1 very2"/>
+                <br/><br/>
+            
+                <h:outputLabel value="Gender "/>
+                <select name="Gender" value="#{registerBean.gender}">
+                    <option>Male</option>
+                    <option>Female</option>
+                </select><br/><br />
+                
+                <h:outputLabel value="Date of birth "/>
+                <select name="Day" value="#{registerBean.day}">
+                    <ui:repeat var="day" value ="#{validDates.days}">
+                        <option>#{day}</option>
+                    </ui:repeat>
+                </select>
+                
+                <select name="Month" value="#{registerBean.month}">
+                    <ui:repeat var="month" value="#{validDates.months}">
+                        <option>#{month}</option>
+                    </ui:repeat>
+                </select>
+                
+                
+                <select name="Year" value="#{registerBean.year}">
+                    <ui:repeat var="year" value="#{validDates.years}">
+                        <option>#{year}</option>
+                    </ui:repeat>                    
+                </select>
+                <br /><br/>
+                
+                <h:outputLabel value="Country"/>
+                <select name="Country" value="#{registerBean.country}">
+                    <ui:repeat var="country" value="#{countryMapper.countries}">
+                        <option>#{country}</option>
+                    </ui:repeat>
+                </select>
+                <br /><br/>
+                
+                <h:outputText value="Terms and conditions"/><br />
+                <div id="rules">
+                <h:outputText value="#{rulesBean.rules}"/>
+                </div>
+                <br />
+                
+                <h:selectBooleanCheckbox id="agree" value="#{registerBean.agreeRules}"/>
+                <b><h:outputLabel value="I have read and agree with the terms and conditions." for="agree"/></b>
+                <br/><br/>
+                
+                <h:commandButton value="Create new account" action="#{userController.createAccount(username, password, dateOfBirth, gender)}"/>
+                
+            </h:form>            
+        </div>
+        <ui:include src="footer.xhtml"/>
+        </div>
+    </h:body>
+</html>
+
