@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public final class ConnectionHelper {
     private final static String database = "schedule";
     private final static String username = "schedule";
-    private final static String password = "tiestoman2";
+    private final static String password = "HIDDEN FROM CODE";
     private final static String host = "localhost";
     private final static String port = "5432";
     private final static String url = "jdbc:postgresql://" + host + ":" + port + "/" + database;
